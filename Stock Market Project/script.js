@@ -1,7 +1,7 @@
 function init() {
   document.getElementById("fromDate").valueAsDate = new Date();
 
-  fetch("http://127.0.0.1:5000/tickers")
+  fetch("http://127.0.0.1:5000/")
     .then((response) => response.json())
     .then((data) => fillTickerDropDown(data))
     .catch((error) => {
@@ -30,6 +30,8 @@ function getTickerInfo(ticker, fromDate, toDate) {
 
 function getStockInfo(data) {
   let records = data.results;
+
+  let jsonRecords = JSON.stringify(records);
 
   console.log(JSON.stringify(records));
 
