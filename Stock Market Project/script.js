@@ -21,15 +21,30 @@ function fillTickerDropDown(dataSet) {
 function getTickerInfo(ticker, fromDate, toDate) {
   let parameters = `${ticker}/${fromDate}/${toDate}`;
   fetch("http://127.0.0.1:5000/tickerinfo/" + new URLSearchParams(parameters))
-    .then((response) => response.json())    
+    .then((response) => response.json())
     .then((data) => getStockInfo(data))
     .catch((error) => {
       console.log("Error: ", error);
     });
 }
 
+function getGoogleNews(ticker) {
+  fetch("http://127.0.0.1:5000/news/" + new URLSearchParams(ticker))
+    .then((response) => response.json())
+    .then((news) => fillNewsParagraph(news))
+    .catch((error) => {
+      console.log("Error: ", error);
+    });
+}
+
+function fillNewsParagraph(news) {
+  let p = document.getElementById("news");
+  p.innerHTML = news;
+}
+
 function getStockInfo(data) {
   let records = data.results;
+  if (!records) return;
 
   let jsonRecords = JSON.stringify(records);
 
@@ -40,10 +55,8 @@ function getStockInfo(data) {
     console.log(tickerJson);
 
     //TODO:
-
   });
 }
-
 
 function inputValueChangted() {
   let duration = document.getElementById("durationDropdown").value;
@@ -81,6 +94,11 @@ function inputValueChangted() {
   toDate.value = `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${date}`;
 
   let ticker = document.getElementById("tickerDropdown").value;
+
+  if (ticker && ticker !== "") {
+    getGoogleNews(ticker);
+  }
+
   if (ticker && fromDateValue && toDate.value) {
     getTickerInfo(ticker, fromDateValue, toDate.value);
   }

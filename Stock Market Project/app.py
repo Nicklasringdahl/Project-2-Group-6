@@ -13,6 +13,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func, text, Table, MetaData, insert, Sequence, Column, Integer, String, DateTime
 from sqlalchemy.engine import URL
 from yahoo_scrape import active_stocks
+from google_news_scrape import *
 
 app = Flask(__name__)
 
@@ -36,6 +37,11 @@ def get_ticker_info_by_date(ticker, from_date, to_date):
     #     persist_to_database(json)
 
     return json
+
+
+@app.route('/news/<ticker>')
+def google_newsScrape(ticker):
+    return get_google_news(ticker)
 
 
 def persist_to_database(data):
