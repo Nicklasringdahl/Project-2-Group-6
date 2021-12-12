@@ -3,21 +3,20 @@ window.onload = function () {
     dps2 = [];
   var stockChart = new CanvasJS.StockChart("chartContainer", {
     title: {
-      text: "Technical Indicators",
+      text: "Stock chart",
     },
-    subtitles: [
-      {
-        text: "Mouse over Technical Indicator Menu to Add SMA, EMA and MACD",
-        fontSize: 12,
-      },
-    ],
+
     theme: "light2",
     exportEnabled: true,
     charts: [
       {
         axisY: {
           prefix: "$",
+          crosshair: {
+            enabled: true,
+          },
         },
+
         legend: {
           verticalAlign: "top",
           horizontalAlign: "left",
@@ -44,6 +43,16 @@ window.onload = function () {
             name: "Stock Price",
             yValueFormatString: "$#,###.00",
             dataPoints: dps1,
+          },
+        ],
+      },
+      {
+        title: {
+          text: "Test",
+        },
+        data: [
+          {
+            dataPoints: dps2,
           },
         ],
       },
