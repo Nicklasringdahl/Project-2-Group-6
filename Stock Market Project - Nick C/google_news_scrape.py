@@ -3,14 +3,11 @@ from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup
 import requests
 from lxml import html
+import json
 
-def latest_google_news(stocks):
-    root ="https://www.google.com/"
-
-    stock = stocks
-
-    link = f"https://www.google.com/search?q=NYSE%20{stock}&tbm=nws&sxsrf=AOaemvK8YyIzs1qaXyZ84_lEcTJ_prropA:1638866843368&source=lnt&tbs=qdr:d&sa=X&ved=2ahUKEwjooKHgptH0AhVIxzgGHYKrBokQpwV6BAgBECE&biw=1371&bih=937&dpr=1"
-
+def get_google_news(ticker):
+    ticker = ticker[:-1]
+    link = f"https://www.google.com/search?q=nyse+{ticker}&tbm=nws&sxsrf=AOaemvLAGr6H4slKdPayoZBiYHPE_WXwcA:1639289339574&source=lnt&tbs=qdr:d&sa=X&ved=2ahUKEwiBpZPWzN30AhVJaN4KHXnJBq0QpwV6BAgBECE&biw=1920&bih=937&dpr=1"
 
     req = Request(link, headers= {'User-Agent': 'Mozilla/5.0'})
 
@@ -24,6 +21,7 @@ def latest_google_news(stocks):
     links = []
     times = []
     descriptions =[]
+    title = ""
 
     for item in soup.find_all('div', attrs={'class': 'ZINbbc xpd O9g5cc uUPGi'}):
         try:
@@ -45,8 +43,11 @@ def latest_google_news(stocks):
         times.append(time)
         descriptions.append(description)
 
-    return titles
+    zip_iterator = zip(titles, links)
+    titles_links_dict = dict(zip_iterator)
 
-keyword = "F"
-latest_google_news(keyword)
+    # print(titles_links_dict)
 
+    jsonString = json.dumps(titles_links_dict)
+
+    return jsonString

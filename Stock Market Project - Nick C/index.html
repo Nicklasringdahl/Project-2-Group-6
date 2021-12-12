@@ -19,12 +19,8 @@
             <h5>Ticker List:</h5>
             <select
               id="tickerDropdown"
-              onchange="inputValueChangted()">
-        </select>
-        <select
-        id="NewsDropdown"
-        onchange="inputValueChangted()">
-  </select>
+              onchange="inputValueChangted()"
+            ></select>
           </div>
         </div>
         <div class="col-md-3">
@@ -52,7 +48,7 @@
                 onchange="inputValueChangted()"
               >
               <option value="oneDay">1 Day</option>
-              <option value="oneWeek">1 Week</option>
+              <option value="oneWeek" selected>1 Week</option>
               <option value="oneMonth">1 Month</option>
               <option value="threeMonths">3 Months</option>
               <option value="sixMonths">6 Months</option>
@@ -61,6 +57,12 @@
             </div>
           </div>
       </div>
+    </div>
+    <div class="container">
+      <!-- Candlestick chart -->
+    </div>
+    <div class = "container"id = "news">
+      <!-- <a id = "newsGoogle"></a> -->
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>

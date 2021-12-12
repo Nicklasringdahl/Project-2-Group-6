@@ -1,7 +1,7 @@
 function init() {
   document.getElementById("fromDate").valueAsDate = new Date();
 
-  fetch("http://127.0.0.1:5000/tickers")
+  fetch("http://127.0.0.1:5000/")
     .then((response) => response.json())
     .then((data) => fillTickerDropDown(data))
     .catch((error) => {
@@ -9,29 +9,7 @@ function init() {
     });
 }
 
-// Testing whether google news would append
-function getGoogleNews(stocks) {
-  fetch("http://127.0.0.1:5000/googlenews")
-  .then((response) => response.json())
-  .then((data) => fillTickerDropDown(data))
-  .catch((error) => {
-    console.log("Error: ", error);
-  });
-  };
-
-
-
 function fillTickerDropDown(dataSet) {
-  let dropdown = d3.select("#NewsDropdown");
-
-  dropdown.append("option").text("").property("value", "");
-  dataSet.forEach((data) => {
-    dropdown.append("option").text(data).property("value", data);
-  });
-}
-
-// google news create list to append
-function fillNewsDropDown(dataSet) {
   let dropdown = d3.select("#tickerDropdown");
 
   dropdown.append("option").text("").property("value", "");
@@ -40,29 +18,49 @@ function fillNewsDropDown(dataSet) {
   });
 }
 
-
-
 function getTickerInfo(ticker, fromDate, toDate) {
   let parameters = `${ticker}/${fromDate}/${toDate}`;
   fetch("http://127.0.0.1:5000/tickerinfo/" + new URLSearchParams(parameters))
-    .then((response) => response.json())    
+    .then((response) => response.json())
     .then((data) => getStockInfo(data))
     .catch((error) => {
       console.log("Error: ", error);
     });
 }
 
-function getTickerInfo(ticker) {
-  fetch("http://127.0.0.1:5000/tickerinfo/")
-    .then((response) => response.json())    
-    .then((data) => getStockInfo(data))
+function getGoogleNews(ticker) {
+  fetch("http://127.0.0.1:5000/news/" + new URLSearchParams(ticker))
+    .then((response) => response.json())
+    .then((news) => fillNewsParagraph(news))
     .catch((error) => {
       console.log("Error: ", error);
     });
 }
+
+function fillNewsParagraph(news) {
+
+  console.log(Object.keys(news).length);
+
+
+    let a = d3.select("#news");
+    a.html("");
+
+    Object.entries(news).forEach(function([key, value]) {
+    console.log(key);
+    console.log(value);
+    var newsData = a.append('a');
+
+      newsData.href = value
+      newsData.innerText = key
+  });
+}
+
 
 function getStockInfo(data) {
   let records = data.results;
+  if (!records) return;
+
+  let jsonRecords = JSON.stringify(records);
 
   console.log(JSON.stringify(records));
 
@@ -71,10 +69,8 @@ function getStockInfo(data) {
     console.log(tickerJson);
 
     //TODO:
-
   });
 }
-
 
 function inputValueChangted() {
   let duration = document.getElementById("durationDropdown").value;
@@ -112,51 +108,15 @@ function inputValueChangted() {
   toDate.value = `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${date}`;
 
   let ticker = document.getElementById("tickerDropdown").value;
-  getGoogleNews(ticker);
+
+  if (ticker && ticker !== "") {
+    getGoogleNews(ticker);
+  }
 
   if (ticker && fromDateValue && toDate.value) {
     getTickerInfo(ticker, fromDateValue, toDate.value);
-  
-  
   }
 }
-
-// function dropDownSelection() {
-//   let ticker = document.getElementById("tickerDropdown").value;
-//   getGoogleNews(ticker)
-//   var dropdownMenu = d3.select("#tickerDropdown");
-//   dropdownMenu.on("change", function() {
-//     var ticker = d3.event.target.value;
-//     console.log(ticker);
-//     getGoogleNews(ticker)
-//   })
-// }
-
-// dropDownSelection();
-
-
-
-
-
-
-
-  // var dropdownMenu = d3.select("#tickerDropdown");
-  // dropdownMenu.on("change", function() {
-  //   var newText = d3.event.target.value;
-  //   console.log(newText);
-  // })
-
-
-  // function getTickerInfo(ticker, fromDate, toDate) {
-  //   let parameters = `${ticker}/${fromDate}/${toDate}`;
-  //   fetch("http://127.0.0.1:5000/tickerinfo/" + new URLSearchParams(parameters))
-  //     .then((response) => response.json())    
-  //     .then((data) => getStockInfo(data))
-  //     .catch((error) => {
-  //       console.log("Error: ", error);
-  //     });
-  // }
-
 
 (function () {
   init();

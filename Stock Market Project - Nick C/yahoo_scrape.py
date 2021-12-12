@@ -13,12 +13,10 @@ def _get_most_active_stocks():
     items =  parser.xpath(xpath_value)
     tickers = []
     for item in items:
-        tickers.append(item.text)       
-
+        tickers.append(item.text)        
+    
     return tickers
 
 
 def active_stocks():
     return _get_most_active_stocks()
-
-    
