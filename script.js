@@ -64,7 +64,7 @@ window.onload = function () {
     charts: [
       {
         title: {
-          text: "Bitcoin Price in USD",
+          text: "Stock Price",
         },
         axisY: {
           prefix: "$",
@@ -79,7 +79,7 @@ window.onload = function () {
       },
       {
         title: {
-          text: "Bitcoin Volume",
+          text: "Volume",
         },
         data: [
           {
