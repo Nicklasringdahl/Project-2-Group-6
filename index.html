@@ -15,6 +15,40 @@
     <link href="css/swiper.css" rel="stylesheet" />
     <link href="css/magnific-popup.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
+    <style>
+  .dropdown {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: inline-block;
+    border: 1px solid #539c53;
+    background-color: #5cb85c;
+    color: white;
+    padding: 8px;
+    font-family:  sans-serif;
+    user-select: none;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 35px;
+    left: 0px;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  .dropdown-content div {
+    padding: 16px;
+    color: black;
+  }
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  .dropdown-content div:hover{
+    background-color: #e8e8e8;
+  }
+</style>
   </head>
 
 
@@ -218,6 +252,7 @@
         </div>
       </div>
     </div>
+    
     <div class="container">
       <!-- Candlestick chart -->
     </div>
@@ -229,6 +264,7 @@
 </div>
     
     <div id="chartContainer" style="height: 450px; width: 100%"></div>
+   
 
         <!-- TPP 10 -->
         <div id="pricing" class="cards-2">
@@ -253,10 +289,10 @@
                   </div> <!-- end of col -->
               </div> <!-- end of row -->
 
-              <div class="row">
-                  <div class="col-lg-12">
-                    <p id="news"></p>
-                    </div>
+              <div class = "container" id = "news">
+                <ul id = "newsArticle">
+                </ul>
+              </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
     <script src="./script.js"></script>

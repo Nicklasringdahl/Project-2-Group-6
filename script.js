@@ -38,8 +38,10 @@ function getGoogleNews(ticker) {
 }
 
 function fillNewsParagraph(news) {
-  let p = document.getElementById("news");
-  p.innerHTML = news;
+  var output = d3.select("#newsArticle");
+  Object.entries(news).forEach(function ([key, value]) {
+    var li = output.append("li").text(`${key}: ${value}`);
+  });
 }
 
 function getStockInfo(data) {
