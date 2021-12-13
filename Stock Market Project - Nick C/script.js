@@ -39,21 +39,16 @@ function getGoogleNews(ticker) {
 
 function fillNewsParagraph(news) {
 
-  console.log(Object.keys(news).length);
+  var output = d3.select("#newsArticle");
 
+  Object.entries(news).forEach(function([key, value])  {
+    var li = output.append("li").text(`${key}: ${value}`);
+});
 
-    let a = d3.select("#news");
-    a.html("");
-
-    Object.entries(news).forEach(function([key, value]) {
-    console.log(key);
-    console.log(value);
-    var newsData = a.append('a');
-
-      newsData.href = value
-      newsData.innerText = key
-  });
+  
 }
+
+
 
 
 function getStockInfo(data) {
